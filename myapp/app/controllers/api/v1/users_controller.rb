@@ -15,7 +15,7 @@ class Api::V1::UsersController < ApiController
 
   # для регистрации юзера
   def create
-    @user = User.new(:mickname => "nickname", :email => "email", :password => "password")
+    @user = User.new(:mickname => params[:nickname], :email => params[:email], :password => params[:password])
     @user.save
   end
 

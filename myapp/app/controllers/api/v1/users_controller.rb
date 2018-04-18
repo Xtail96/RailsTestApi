@@ -26,6 +26,16 @@ class Api::V1::UsersController < ApiController
 
   # для авторизации юзера
   def auth
+    email = params[:email]
+    password = params[:password]
+
+    user = ::User.find_by_email(email)
+    if(user.present? && user.password == password)
+      @token = user.token
+    else
+      render json: "{\"status\": \"auth_failed\"}"
+    end
+
   end
 
 end

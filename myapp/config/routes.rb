@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       #resources :users, only: %i[index create update auth]
       resources :users, only: %i[index create]
       post '/users/auth', action: :auth, controller: 'users'
+      post '/users/reset_password', action: :reset_password, controller: 'users'
 
       resources :tokens, only: %i[index]
     end

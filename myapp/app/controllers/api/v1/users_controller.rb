@@ -35,7 +35,17 @@ class Api::V1::UsersController < ApiController
     else
       render json: "{\"status\": \"auth_failed\"}"
     end
+  end
 
+  def reset_password
+    email = params[:email]
+    user = ::User.find_by_email(email)
+    if(user.present?)
+      UserMailer.reset_password_email(user).deliver
+      render json: "{\"status\": \"password successfuly reset. check your email\"}"
+    else
+      render json: "{\"status\": \"email address is incorrect\"}"
+    end
   end
 
 end

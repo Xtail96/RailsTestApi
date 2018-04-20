@@ -11,13 +11,15 @@ class Api::V1::UsersController < ApiController
     email = params[:email]
     password = params[:password]
 
-    @user = ::User.new(:mickname => nickname, :email => email, :password => password)
-    @user.save
-
-    @user = ::User.find_by_email(email)
-
-    token_value = SecureRandom.urlsafe_base64(nil, false)
-    @user.token = Token.new(:access_value => token_value)
+    if(::User.find_by_email(email).present?)
+      render json: "{\"status\": \"User already exist. Please choose different email\"}"
+    else
+      @user = ::User.new(:mickname => nickname, :email => email, :password => password)
+      @user.save
+      @user = ::User.find_by_email(email)
+      token_value = SecureRandom.urlsafe_base64(nil, false)
+      @user.token = Token.new(:access_value => token_value)
+    end
   end
 
   # для обновления юзера

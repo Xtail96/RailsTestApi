@@ -41,7 +41,7 @@ class Api::V1::UsersController < ApiController
     email = params[:email]
     user = ::User.find_by_email(email)
     if(user.present?)
-      password = generate_password
+      password = change_password(email)
       UserMailer.reset_password_email(user, password).deliver
       render json: "{\"status\": \"password successfuly reset. check your email\"}"
     else
@@ -51,6 +51,14 @@ class Api::V1::UsersController < ApiController
 
   def generate_password
     return SecureRandom.hex(10)
+  end
+
+  def change_password(email)
+    user = ::User.find_by_email(email)
+    if(user.present?)
+      user.password = generate_password
+    end
+    return user.password
   end
 
 end

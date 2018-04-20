@@ -57,6 +57,7 @@ class Api::V1::UsersController < ApiController
     user = ::User.find_by_email(email)
     if(user.present?)
       user.password = generate_password
+      user.save
     end
     return user.password
   end

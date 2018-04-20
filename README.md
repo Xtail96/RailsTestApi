@@ -8,3 +8,4 @@
 1. [GET] domain/api/v1/users - show all users
 1. [POST] domain/api/v1/users [params: email, nickname, password] - create user
 1. [POST] domain/api/v1/users/auth [params: email, password] - authorize user
+1. [POST] domain/api/v1/users/reset_password [params: email] - reset password
